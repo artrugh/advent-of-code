@@ -1,5 +1,5 @@
-import  {positions, testPositions}  from "./src/assets";
-import  { getPosition} from "./src/utils";
+import  {positions}  from "./src/assets";
+import  { getPosition, getPositionAddAim} from "./src/utils";
 
 // firstDayFirstPuzzle
 // const firstDayFirstPuzzle = countIncreaseAmountNumber(arrayOfNumbers);
@@ -10,5 +10,8 @@ import  { getPosition} from "./src/utils";
 // // console.log(fistDaySecondPuzzle);
 
 const secondDayFirstPuzzle = getPosition(positions);
-console.log(secondDayFirstPuzzle);
+console.log("secondDayFirstPuzzle", secondDayFirstPuzzle);
+
+const secondDaySecondPuzzle = getPositionAddAim(positions);
+console.log("secondDaySecondPuzzle", secondDaySecondPuzzle)
 

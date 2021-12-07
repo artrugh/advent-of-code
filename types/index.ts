@@ -10,3 +10,4 @@ export type CounterDirections = {
     [key in Direction]: number;
 };
 export type AxesPosition = [number, number];
+export type AxesPositionObj = {x: number, y: number}

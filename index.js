@@ -10,4 +10,6 @@ var utils_1 = require("./src/utils");
 // const fistDaySecondPuzzle = countIncreaseAmountNumberFromWindows(windows);
 // // console.log(fistDaySecondPuzzle);
 var secondDayFirstPuzzle = (0, utils_1.getPosition)(assets_1.positions);
-console.log(secondDayFirstPuzzle);
+console.log("secondDayFirstPuzzle", secondDayFirstPuzzle);
+var secondDaySecondPuzzle = (0, utils_1.getPositionAddAim)(assets_1.positions);
+console.log("secondDaySecondPuzzle", secondDaySecondPuzzle);

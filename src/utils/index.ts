@@ -1,5 +1,5 @@
 import { Direction } from "../../enums";
-import { ArrayOfNumbers, AxesPosition, CounterDirections, ObjectCharKeyNumber, PositionsArray, WindowsTable } from "../../types";
+import { ArrayOfNumbers, AxesPosition, AxesPositionObj, CounterDirections, ObjectCharKeyNumber, PositionsArray, WindowsTable } from "../../types";
 import {alphabet} from "../assets";
 
 const getCyrcleNumber = (input: number, cols: number) => {
@@ -122,10 +122,43 @@ export const countDirections = (input: PositionsArray): CounterDirections => {
     return counterDirections
 }
 
+export const countDirectionsAddAim = (input: PositionsArray): AxesPositionObj => {
+
+    const counterDirections: AxesPositionObj = {
+          x: 0, y: 0,
+    };
+    let aim = 0;
+
+    for (let i = 0; i < input.length; i++){
+        switch (input[i][0]) {
+            case Direction.Forward:
+                // increase horizontal
+                counterDirections.x = counterDirections.x + input[i][1];
+                // increase depth multiply aim
+                counterDirections.y = counterDirections.y + (aim * input[i][1])
+                break;
+            case Direction.Down:
+                aim = aim + input[i][1];
+                break;
+            case Direction.Up:
+                aim = aim - input[i][1]
+                break;
+            default:
+                console.log("Sorry, this is not a right direction");
+        }
+    }
+    
+    return counterDirections
+}
+
 export const getAxesPosition = (input: CounterDirections): AxesPosition => {
     const x = input.forward;
     const y = input.down - input.up
     return [x, y]
+}
+
+export const getAxesPositionFromObj = (input: AxesPositionObj): AxesPosition => {
+    return [input.x, input.y]
 }
 
 export const getCounterPosition = (input: AxesPosition): number => {
@@ -135,6 +168,13 @@ export const getCounterPosition = (input: AxesPosition): number => {
 export const getPosition = (input: PositionsArray): number => {
     const directions = countDirections(input);
     const axes = getAxesPosition(directions);
+    const result = getCounterPosition(axes);
+    return result
+}
+
+export const getPositionAddAim = (input: PositionsArray): number => {
+    const directions = countDirectionsAddAim(input);
+    const axes = getAxesPositionFromObj(directions);
     const result = getCounterPosition(axes);
     return result
 }

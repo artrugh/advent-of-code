@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.getPosition = exports.getCounterPosition = exports.getAxesPosition = exports.countDirections = exports.replaceNumberByChar = exports.addNumWindowsArrayToNumArray = exports.countIncreaseAmountNumberFromWindows = exports.measureWindows = exports.countIncreaseAmountNumber = void 0;
+exports.getPositionAddAim = exports.getPosition = exports.getCounterPosition = exports.getAxesPositionFromObj = exports.getAxesPosition = exports.countDirectionsAddAim = exports.countDirections = exports.replaceNumberByChar = exports.addNumWindowsArrayToNumArray = exports.countIncreaseAmountNumberFromWindows = exports.measureWindows = exports.countIncreaseAmountNumber = void 0;
 var enums_1 = require("../../enums");
 var assets_1 = require("../assets");
 var getCyrcleNumber = function (input, cols) {
@@ -110,12 +110,42 @@ var countDirections = function (input) {
     return counterDirections;
 };
 exports.countDirections = countDirections;
+var countDirectionsAddAim = function (input) {
+    var counterDirections = {
+        x: 0, y: 0
+    };
+    var aim = 0;
+    for (var i = 0; i < input.length; i++) {
+        switch (input[i][0]) {
+            case enums_1.Direction.Forward:
+                // increase horizontal
+                counterDirections.x = counterDirections.x + input[i][1];
+                // increase depth multiply aim
+                counterDirections.y = counterDirections.y + (aim * input[i][1]);
+                break;
+            case enums_1.Direction.Down:
+                aim = aim + input[i][1];
+                break;
+            case enums_1.Direction.Up:
+                aim = aim - input[i][1];
+                break;
+            default:
+                console.log("Sorry, this is not a right direction");
+        }
+    }
+    return counterDirections;
+};
+exports.countDirectionsAddAim = countDirectionsAddAim;
 var getAxesPosition = function (input) {
     var x = input.forward;
     var y = input.down - input.up;
     return [x, y];
 };
 exports.getAxesPosition = getAxesPosition;
+var getAxesPositionFromObj = function (input) {
+    return [input.x, input.y];
+};
+exports.getAxesPositionFromObj = getAxesPositionFromObj;
 var getCounterPosition = function (input) {
     return input[0] * input[1];
 };
@@ -127,3 +157,10 @@ var getPosition = function (input) {
     return result;
 };
 exports.getPosition = getPosition;
+var getPositionAddAim = function (input) {
+    var directions = (0, exports.countDirectionsAddAim)(input);
+    var axes = (0, exports.getAxesPositionFromObj)(directions);
+    var result = (0, exports.getCounterPosition)(axes);
+    return result;
+};
+exports.getPositionAddAim = getPositionAddAim;
