@@ -9,7 +9,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.replaceNumberByChar = exports.addNumWindowsArrayToNumArray = exports.countIncreaseAmountNumberFromWindows = exports.measureWindows = exports.countIncreaseAmountNumber = void 0;
+exports.getPosition = exports.getCounterPosition = exports.getAxesPosition = exports.countDirections = exports.replaceNumberByChar = exports.addNumWindowsArrayToNumArray = exports.countIncreaseAmountNumberFromWindows = exports.measureWindows = exports.countIncreaseAmountNumber = void 0;
+var enums_1 = require("../../enums");
 var assets_1 = require("../assets");
 var getCyrcleNumber = function (input, cols) {
     return (input + cols) % cols;
@@ -87,3 +88,42 @@ var replaceNumberByChar = function (input) {
     return arrayOfChar;
 };
 exports.replaceNumberByChar = replaceNumberByChar;
+var countDirections = function (input) {
+    var counterDirections = {
+        forward: 0, down: 0, up: 0
+    };
+    for (var i = 0; i < input.length; i++) {
+        switch (input[i][0]) {
+            case enums_1.Direction.Forward:
+                counterDirections.forward = counterDirections.forward + input[i][1];
+                break;
+            case enums_1.Direction.Down:
+                counterDirections.down = counterDirections.down + input[i][1];
+                break;
+            case enums_1.Direction.Up:
+                counterDirections.up = counterDirections.up + input[i][1];
+                break;
+            default:
+                console.log("Sorry, this is not a right direction");
+        }
+    }
+    return counterDirections;
+};
+exports.countDirections = countDirections;
+var getAxesPosition = function (input) {
+    var x = input.forward;
+    var y = input.down - input.up;
+    return [x, y];
+};
+exports.getAxesPosition = getAxesPosition;
+var getCounterPosition = function (input) {
+    return input[0] * input[1];
+};
+exports.getCounterPosition = getCounterPosition;
+var getPosition = function (input) {
+    var directions = (0, exports.countDirections)(input);
+    var axes = (0, exports.getAxesPosition)(directions);
+    var result = (0, exports.getCounterPosition)(axes);
+    return result;
+};
+exports.getPosition = getPosition;

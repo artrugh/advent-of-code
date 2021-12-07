@@ -1,4 +1,5 @@
-import { ArrayOfNumbers, ObjectCharKeyNumber, WindowsTable } from "../../types";
+import { Direction } from "../../enums";
+import { ArrayOfNumbers, AxesPosition, CounterDirections, ObjectCharKeyNumber, PositionsArray, WindowsTable } from "../../types";
 import {alphabet} from "../assets";
 
 const getCyrcleNumber = (input: number, cols: number) => {
@@ -92,4 +93,48 @@ export const replaceNumberByChar = (input: Array<number | undefined>): Array<str
         return;  
     })
     return arrayOfChar;
+}
+
+
+ 
+export const countDirections = (input: PositionsArray): CounterDirections => {
+
+    const counterDirections: CounterDirections = {
+          forward: 0, down: 0 , up: 0
+    };
+
+    for (let i = 0; i < input.length; i++){
+        switch (input[i][0]) {
+            case Direction.Forward:
+                counterDirections.forward = counterDirections.forward + input[i][1]
+                break;
+            case Direction.Down:
+                counterDirections.down = counterDirections.down + input[i][1]
+                break;
+            case Direction.Up:
+                counterDirections.up = counterDirections.up + input[i][1]
+                break;
+            default:
+                console.log("Sorry, this is not a right direction");
+        }
+    }
+    
+    return counterDirections
+}
+
+export const getAxesPosition = (input: CounterDirections): AxesPosition => {
+    const x = input.forward;
+    const y = input.down - input.up
+    return [x, y]
+}
+
+export const getCounterPosition = (input: AxesPosition): number => {
+    return input[0] * input[1]
+}
+
+export const getPosition = (input: PositionsArray): number => {
+    const directions = countDirections(input);
+    const axes = getAxesPosition(directions);
+    const result = getCounterPosition(axes);
+    return result
 }
