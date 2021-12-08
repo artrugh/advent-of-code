@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.getPositionAddAim = exports.getPosition = exports.getCounterPosition = exports.getAxesPositionFromObj = exports.getAxesPosition = exports.countDirectionsAddAim = exports.countDirections = exports.replaceNumberByChar = exports.addNumWindowsArrayToNumArray = exports.countIncreaseAmountNumberFromWindows = exports.measureWindows = exports.countIncreaseAmountNumber = void 0;
+exports.getCommonBinaryConvertToDecimal = exports.getCommon = exports.multiplyTwoNums = exports.getMostPopularAndUnpopularArrayOfNumberInDecimal = exports.setCommon = exports.restNumbersFromArray = exports.getAmountOfIndexedBinaryNum = exports.counterFrequentNum = exports.getPositionAddAim = exports.getPosition = exports.getCounterPosition = exports.getAxesPositionFromObj = exports.getAxesPosition = exports.countDirectionsAddAim = exports.countDirections = exports.replaceNumberByChar = exports.addNumWindowsArrayToNumArray = exports.countIncreaseAmountNumberFromWindows = exports.measureWindows = exports.countIncreaseAmountNumber = void 0;
 var enums_1 = require("../../enums");
 var assets_1 = require("../assets");
 var getCyrcleNumber = function (input, cols) {
@@ -57,7 +57,9 @@ var addNumWindowsArrayToNumArray = function (input, numberOfCol) {
     if (numberOfCol === void 0) { numberOfCol = 4; }
     // create empty arrays after the number
     // the length of the array is pass as an argument
-    var newEmptyArray = input.map(function (v) { return [v, Array(numberOfCol)]; });
+    var newEmptyArray = input.map(function (v) {
+        return [v, Array(numberOfCol)];
+    });
     var result = newEmptyArray.map(function (v, idx) {
         // copy the array
         var newArr = __spreadArray([], v[1], true);
@@ -90,7 +92,9 @@ var replaceNumberByChar = function (input) {
 exports.replaceNumberByChar = replaceNumberByChar;
 var countDirections = function (input) {
     var counterDirections = {
-        forward: 0, down: 0, up: 0
+        forward: 0,
+        down: 0,
+        up: 0
     };
     for (var i = 0; i < input.length; i++) {
         switch (input[i][0]) {
@@ -112,7 +116,8 @@ var countDirections = function (input) {
 exports.countDirections = countDirections;
 var countDirectionsAddAim = function (input) {
     var counterDirections = {
-        x: 0, y: 0
+        x: 0,
+        y: 0
     };
     var aim = 0;
     for (var i = 0; i < input.length; i++) {
@@ -121,7 +126,7 @@ var countDirectionsAddAim = function (input) {
                 // increase horizontal
                 counterDirections.x = counterDirections.x + input[i][1];
                 // increase depth multiply aim
-                counterDirections.y = counterDirections.y + (aim * input[i][1]);
+                counterDirections.y = counterDirections.y + aim * input[i][1];
                 break;
             case enums_1.Direction.Down:
                 aim = aim + input[i][1];
@@ -164,3 +169,89 @@ var getPositionAddAim = function (input) {
     return result;
 };
 exports.getPositionAddAim = getPositionAddAim;
+var counterFrequentNum = function (input) {
+    var counter = Array.from(Array(input[0].length), function (_) { return [0, 0]; });
+    for (var i = 0; i < input.length; i++) {
+        for (var j = 0; j < input[i].length; j++) {
+            if (Number(input[i][j]) === 0) {
+                counter[j][0]++;
+            }
+            else if (Number(input[i][j]) === 1) {
+                counter[j][1]++;
+            }
+        }
+    }
+    return counter;
+};
+exports.counterFrequentNum = counterFrequentNum;
+var getAmountOfIndexedBinaryNum = function (input, idx) {
+    var counter = [0, 0];
+    for (var i = 0; i < input.length; i++) {
+        if (Number(input[i][idx]) === 0) {
+            counter[0]++;
+        }
+        else if (Number(input[i][idx]) === 1) {
+            counter[1]++;
+        }
+    }
+    return counter;
+};
+exports.getAmountOfIndexedBinaryNum = getAmountOfIndexedBinaryNum;
+var restNumbersFromArray = function (input) {
+    return input.map(function (v) { return v[0] - v[1]; });
+};
+exports.restNumbersFromArray = restNumbersFromArray;
+var setCommon = function (input, common) {
+    if (common) {
+        return input.map(function (v) { return (v < 0 ? 1 : 0); });
+    }
+    return input.map(function (v) { return (v < 0 ? 0 : 1); });
+};
+exports.setCommon = setCommon;
+var setBinaryToDecimal = function (input) {
+    return parseInt(input, 2);
+};
+var getMostPopularAndUnpopularArrayOfNumberInDecimal = function (input) {
+    var freqNums = (0, exports.counterFrequentNum)(input);
+    var arrayOfFreqNumb = (0, exports.restNumbersFromArray)(freqNums);
+    var common = (0, exports.setCommon)(arrayOfFreqNumb, true);
+    var uncommon = (0, exports.setCommon)(arrayOfFreqNumb, false);
+    var firstResult = setBinaryToDecimal(common.join(""));
+    var secondResult = setBinaryToDecimal(uncommon.join(""));
+    return [firstResult, secondResult];
+};
+exports.getMostPopularAndUnpopularArrayOfNumberInDecimal = getMostPopularAndUnpopularArrayOfNumberInDecimal;
+var multiplyTwoNums = function (input) {
+    return input[0] * input[1];
+};
+exports.multiplyTwoNums = multiplyTwoNums;
+var getCommon = function (input, common) {
+    var i = 0;
+    var _loop_1 = function () {
+        var freqNums = (0, exports.getAmountOfIndexedBinaryNum)(input, i);
+        var amount = freqNums[0] - freqNums[1];
+        var limit;
+        if (common) {
+            limit = amount > 0 ? 1 : 0;
+        }
+        else {
+            limit = amount > 0 ? 0 : 1;
+        }
+        var filteredArray = input.filter(function (v) { return Number(v[i]) === limit; });
+        input = filteredArray;
+        i++;
+    };
+    while (input.length > 1) {
+        _loop_1();
+    }
+    return input;
+};
+exports.getCommon = getCommon;
+var getCommonBinaryConvertToDecimal = function (input) {
+    var binaryCommon = (0, exports.getCommon)(input, true);
+    var binaryUncommon = (0, exports.getCommon)(input, false);
+    var decimalCommon = setBinaryToDecimal(binaryCommon.join(""));
+    var decimalUncommon = setBinaryToDecimal(binaryUncommon.join(""));
+    return [decimalCommon, decimalUncommon];
+};
+exports.getCommonBinaryConvertToDecimal = getCommonBinaryConvertToDecimal;

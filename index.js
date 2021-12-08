@@ -7,9 +7,13 @@ var utils_1 = require("./src/utils");
 // // console.log(firstDayFirstPuzzle)
 // fistDaySecondPuzzle
 // const windows = addNumWindowsArrayToNumArray(arrayOfNumbers);
-// const fistDaySecondPuzzle = countIncreaseAmountNumberFromWindows(windows);
-// // console.log(fistDaySecondPuzzle);
-var secondDayFirstPuzzle = (0, utils_1.getPosition)(assets_1.positions);
-console.log("secondDayFirstPuzzle", secondDayFirstPuzzle);
-var secondDaySecondPuzzle = (0, utils_1.getPositionAddAim)(assets_1.positions);
-console.log("secondDaySecondPuzzle", secondDaySecondPuzzle);
+// const firstDaySecondPuzzle = countIncreaseAmountNumberFromWindows(windows);
+// // console.log(firstDaySecondPuzzle);
+// const secondDayFirstPuzzle = getPosition(positions);
+// console.log("secondDayFirstPuzzle", secondDayFirstPuzzle);
+// const secondDaySecondPuzzle = getPositionAddAim(positions);
+// console.log("secondDaySecondPuzzle", secondDaySecondPuzzle)
+var thirdDayFirstPuzzle = (0, utils_1.multiplyTwoNums)((0, utils_1.getMostPopularAndUnpopularArrayOfNumberInDecimal)(assets_1.arrayOfBinaryNum));
+console.log("thirdDayFirstPuzzle", thirdDayFirstPuzzle);
+var thirdDaySecondPuzzle = (0, utils_1.multiplyTwoNums)((0, utils_1.getCommonBinaryConvertToDecimal)(assets_1.arrayOfBinaryNum));
+console.log("thirdDaySecondPuzzle", thirdDaySecondPuzzle);
